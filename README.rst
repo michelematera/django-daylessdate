@@ -59,3 +59,12 @@ They can also be compared or sorted as would be expected, for example:
 True
 >>> m.order_by('month')
 [<MyModel: January 2021>, <MyModel: August 2021>]
+
+
+In admin.py:
+
+    from djangodaylessdate.filter import DaylessDateFilter
+
+    @admin.register(MyModel)
+    class MyModelAdmin(admin.ModelAdmin):
+        list_filter = [('month', DaylessDateFilter)]
