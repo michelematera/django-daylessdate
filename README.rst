@@ -54,9 +54,8 @@ They can also be compared or sorted as would be expected, for example:
 
 >>> m = MyModel.objects.all() 
 >>> m
-<<<<<<< HEAD
 [<MyModel: August 2021>, <MyModel: January 2021>]
 >>> m[0].month > m[1].month
-False
+True
 >>> m.order_by('month')
 [<MyModel: January 2021>, <MyModel: August 2021>]
