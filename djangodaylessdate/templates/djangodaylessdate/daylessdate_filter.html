@@ -1,0 +1,50 @@
+{% load i18n static %}
+
+<style>
+    input[type=submit],input[type=reset] {
+        background: #871257;
+        padding: 4px 5px;
+        border: none;
+        border-radius: 4px;
+        color: #fff;
+        cursor: pointer;
+    }
+</style>
+<script>
+  django.jQuery('document').ready(function () {
+    (function ($) {
+      window.jQuery = $;
+      $.getScript("//cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js", function () {
+        $(document).ready(function () {
+          $("#daylessdate input[type='search']").mask("00/0000", {placeholder: "MM/YYYY"});
+          $("#daylessdate input[type='reset']").click(function () {
+            $("#daylessdate input[type='search']").val("");
+            window.location = window.location.pathname +  $("#daylessdate input[type='reset']").data("query-string");
+          });
+        });
+      });
+    }(django.jQuery));
+  });
+</script>
+<h3>{% blocktrans with filter_title=title %} By {{ filter_title }} {% endblocktrans %}</h3>
+
+
+
+{% with choices.0 as choice %}
+  <ul>
+    <li>
+      <form method="get" id="daylessdate">
+        <input type="search" name="{{ choice.parameter_name }}"
+               value="{{ choice.current_value|default_if_none:"" }}"/>
+        {% for k, v in choice.get_query.items %}
+          {% if not k == choice.parameter_name %}
+            <input type="hidden" name="{{ k }}" value="{{ v }}">
+          {% endif %}
+        {% endfor %}
+        <br>
+        <input type="submit" value="{% trans 'Search' %}">
+        <input type="reset" data-query-string="{{ choice.query_string|iriencode }}" value="{% trans "Reset" %}">
+      </form>
+    </li>
+  </ul>
+{% endwith %}

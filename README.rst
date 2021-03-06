@@ -4,9 +4,6 @@ django-daylessdate
 
 Provides a Django model and form fields for dates that do not include days.
 
-
-|build-status| |python-versions| |django-versions| |wheel| |license|
-
 Prerequisites
 =============
 
@@ -18,65 +15,47 @@ Installation
 
 .. code-block:: console
 
-    pip install django-yearlessdate
+    pip install django-daylessdate
 
 Usage
 =====
 
 The package provide fields ``DaylessDateField``.
 
-YearlessDateField
+DaylessDateField
 -----------------
 
-``YearlessDateField`` stores a date without a year: January 1st, for example.
+``DaylessDateField`` stores a date without a day: January 2021, for example.
 
-Its default widget consists of two dropdowns, one for a day and one for the month.
+Its default widget consists of one dropdowns and one input, one for a month and one for the year.
 
-It will only allow potentially valid dates. For example, a user won't be able to set
-the date to April 31st. February 29th is counted as a valid date.
 
-Here's an example ``models.py`` that declares a model with a required yearless date::
+Here's an example ``models.py`` that declares a model with a required dayless date::
 
     from django.db import models
-    from djangoyearlessdate.models import YearlessDateField
+    from djangodaylessdate.models import DaylessDateField
   
     class MyModel(models.Model):
-        birthday = YearlessDateField()
+        month = DaylessDateField()
 
-The values of ``YearlessDateField`` on the model instances can be accessed like so:
+The values of ``DaylessDateField`` on the model instances can be accessed like so:
 
 >>> a = MyModel.objects.get(id=1)
 >>> a
-<MyModel: 4 August 2011>
->>> a.birthday.day
-4
->>> a.birthday.month
+<MyModel: August 2021>
+>>> a.month.month
 8
->>> print a.birthday
-4 August
+>>> a.month.year
+2021
+>>> print a.month
+August 2021
 
 They can also be compared or sorted as would be expected, for example:
 
 >>> m = MyModel.objects.all() 
 >>> m
-[<MyModel: 4 August 2011>, <MyModel: 30 June 2013>]
->>> m[0].birthday > m[1].birthday
-True
->>> m.order_by('birthday')
-[<MyModel: 30 June 2013>, <MyModel: 4 August 2011>]
-
-YearField
----------
-
-``YearField`` is a very simple model field that stores the year as an integer,
-and ensures the year provided lies between 1900 and 2200::
-
-    from django.db import models
-    from djangoyearlessdate.models import YearField
-
-    class MyModel(models.Model):
-        year = YearField(null=True, blank=True)
-
-Use of ``YearField`` is *not recommended* due to its lack of configurability.
-You're almost certainly better of using a ``SmallIntegerField`` in combination
-with a ``MinValueValidator`` and a ``MaxValueValidator``.
+[<MyModel: August 2021>, <MyModel: January 2021>]
+>>> m[0].month > m[1].month
+False
+>>> m.order_by('month')
+[<MyModel: January 2021>, <MyModel: August 2021>]
