@@ -61,7 +61,7 @@ True
 [<MyModel: January 2021>, <MyModel: August 2021>]
 
 
-In admin.py:
+In admin.py::
 
     from djangodaylessdate.filter import DaylessDateFilter
 
