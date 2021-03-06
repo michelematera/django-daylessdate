@@ -4,9 +4,6 @@ django-daylessdate
 
 Provides a Django model and form fields for dates that do not include days.
 
-
-|build-status| |python-versions| |django-versions| |wheel| |license|
-
 Prerequisites
 =============
 
