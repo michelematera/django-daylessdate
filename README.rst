@@ -63,7 +63,7 @@ True
 
 In admin.py::
 
-    from djangodaylessdate.filter import DaylessDateFilter
+    from djangodaylessdate.filters import DaylessDateFilter
 
     @admin.register(MyModel)
     class MyModelAdmin(admin.ModelAdmin):
