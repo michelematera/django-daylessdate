@@ -17,6 +17,13 @@ Installation
 
     pip install django-daylessdate
 
+Add ``djangodaylessdate`` to ``INSTALLED_APPS``::
+    INSTALLED_APPS = (
+        ...
+        'djangodaylessdate',
+        ...
+    )
+
 Usage
 =====
 

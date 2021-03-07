@@ -21,7 +21,6 @@ class DaylessDateField(models.Field):
     def get_prep_value(self, value):
         if value is not None and isinstance(value, DaylessDate):
             return ''.join(['{:02d}'.format(x) for x in (value.year, value.month)])
-        return value
 
     def get_internal_type(self):
         return 'CharField'

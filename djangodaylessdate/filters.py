@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.admin import AllValuesFieldListFilter, FieldListFilter
+from django.contrib.admin import FieldListFilter
 from django.core.exceptions import ValidationError
 from django.contrib.admin.options import IncorrectLookupParameters
 
@@ -7,7 +7,7 @@ from .helpers import DaylessDate
 
 class DaylessDateFilter(FieldListFilter):
     parameter_name = None
-    template = "djangodaylessdate/daylessdate_filter.html"
+    template = 'djangodaylessdate/daylessdate_filter.html'
 
     def __init__(self, field, request, params, model, model_admin, field_path):
         super().__init__(field, request, params, model, model_admin, field_path)
