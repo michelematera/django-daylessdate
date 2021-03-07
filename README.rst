@@ -17,17 +17,19 @@ Installation
 
     pip install django-daylessdate
 
-Add ``djangodaylessdate`` to ``INSTALLED_APPS``::
+Usage
+=====
+
+The package provide fields ``DaylessDateField``.
+
+Add ``djangodaylessdate`` to INSTALLED_APPS::
+
     INSTALLED_APPS = (
         ...
         'djangodaylessdate',
         ...
     )
 
-Usage
-=====
-
-The package provide fields ``DaylessDateField``.
 
 DaylessDateField
 -----------------
