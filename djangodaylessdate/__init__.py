@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 
 __author__ = 'Michele Matera'
-__version__ = '0.5'
+__version__ = '0.6'
 
 
 default_app_config = 'djangodaylessdate.apps.DjangoDaylessDateConfig'
