@@ -34,7 +34,7 @@
   <ul>
     <li>
       <form method="get" id="daylessdate">
-        <input type="search" name="{{ choice.parameter_name }}"
+        <input type="search" name="{{ choice.field_path }}"
                value="{{ choice.current_value|default_if_none:"" }}"/>
         {% for k, v in choice.get_query.items %}
           {% if not k == choice.parameter_name %}

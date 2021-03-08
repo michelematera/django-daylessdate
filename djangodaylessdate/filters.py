@@ -6,27 +6,23 @@ from django.contrib.admin.options import IncorrectLookupParameters
 from .helpers import DaylessDate
 
 class DaylessDateFilter(FieldListFilter):
-    parameter_name = None
     template = 'djangodaylessdate/daylessdate_filter.html'
 
     def __init__(self, field, request, params, model, model_admin, field_path):
         super().__init__(field, request, params, model, model_admin, field_path)
-        if self.parameter_name is None:
-            self.parameter_name = self.field.name
-
-        if self.parameter_name in params:
-            value = params.pop(self.parameter_name)
+        if self.field_path in params:
+            value = params.pop(self.field_path)
             try:
                 DaylessDate(*value.split('/'))
-                self.used_parameters[self.parameter_name] = value
+                self.used_parameters[self.field_path] = value
             except:
                 messages.warning(request, 'Invalid data')
 
     def queryset(self, request, queryset):
-        query_params = {k: v for k, v in self.used_parameters.items() if k != self.parameter_name}
-        if self.parameter_name in self.used_parameters:
+        query_params = {k: v for k, v in self.used_parameters.items() if k != self.field_path}
+        if self.field_path in self.used_parameters:
             try:
-                query_params[self.parameter_name] = DaylessDate(*self.used_parameters[self.parameter_name].split('/'))
+                query_params[self.field_path] = DaylessDate(*self.used_parameters[self.field_path].split('/'))
             except:
                 pass
         try:
@@ -38,12 +34,12 @@ class DaylessDateFilter(FieldListFilter):
         return True
 
     def expected_parameters(self):
-        return [self.parameter_name]
+        return [self.field_path]
 
     def choices(self, changelist):
         yield {
             'get_query': changelist.params,
-            'current_value': self.used_parameters.get(self.parameter_name),
-            'query_string': changelist.get_query_string({}, [self.parameter_name]),
-            'parameter_name': self.parameter_name
+            'current_value': self.used_parameters.get(self.field_path),
+            'query_string': changelist.get_query_string({}, [self.field_path]),
+            'field_path': self.field_path
         }
