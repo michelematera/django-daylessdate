@@ -18,7 +18,7 @@ class DaylessDateSelect(MultiWidget):
         super().__init__(widgets=widgets, *args, **kwargs)
 
     def decompress(self, value):
-        if value is None:
+        if not value:
             return [None, None]
         return [value.month, value.year]
 
