@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, connection
 from .helpers import DaylessDate
 from . import forms
 
@@ -21,6 +21,7 @@ class DaylessDateField(models.Field):
     def get_prep_value(self, value):
         if value and isinstance(value, DaylessDate):
             return ''.join(['{:02d}'.format(x) for x in (value.year, value.month)])
+        return value
 
     def get_internal_type(self):
         return 'CharField'
@@ -31,7 +32,13 @@ class DaylessDateField(models.Field):
         return DaylessDate(value[-2:], value[:4])
 
     def formfield(self, **kwargs):
+        defaults = {}
+        if self.null and not connection.features.interprets_empty_strings_as_nulls:
+            defaults['empty_value'] = None
+        else:
+            defaults['empty_value'] = ''
+        defaults.update(kwargs)
         return super().formfield(**{
             'form_class': forms.DaylessDateField,
-            **kwargs,
+            **defaults
         })

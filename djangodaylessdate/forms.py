@@ -26,9 +26,15 @@ class DaylessDateSelect(MultiWidget):
 class DaylessDateField(forms.Field):
     widget = DaylessDateSelect
 
+    def __init__(self, *, empty_value='', **kwargs):
+        self.empty_value = empty_value
+        super().__init__(**kwargs)
+
     def clean(self, value):
+        if all([x in self.empty_values for x in value]):
+            return self.empty_value
         try:
-            value = DaylessDate(*value) if value != ['', ''] else None
+            value = DaylessDate(*value)
         except:
             raise ValidationError('Invalid date.')
         return value
